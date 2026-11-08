@@ -1,0 +1,19 @@
+{
+  "name": "vehicle-rental-calculator",
+  "version": "1.0.0",
+  "description": "Chrome Extension - Hệ thống tính phí thuê xe (Software Testing)",
+  "scripts": {
+    "test": "npx playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.0"
+  },
+  "main": "background.js",
+  "directories": {
+    "test": "tests"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}

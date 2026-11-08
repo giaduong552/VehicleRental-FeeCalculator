@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vehicle Rental Calculator</title>
+    <link rel="stylesheet" href="sidepanel.css" />
+  </head>
+  <body>
+    <div id="app-container" class="vrc-app-container">
+      <!-- Header cố định (56px) theo phong cách Bee Tools -->
+      <header class="vrc-topbar">
+        <div class="vrc-topbar-left">
+          <div class="vrc-logo-icon">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"
+              />
+              <circle cx="7" cy="17" r="2" />
+              <path d="M9 17h6" />
+              <circle cx="17" cy="17" r="2" />
+            </svg>
+          </div>
+          <span class="vrc-topbar-title">Vehicle Rental Calculator</span>
+        </div>
+        <div class="vrc-topbar-right">
+          <button
+            type="button"
+            id="header-reset-btn"
+            data-testid="header-reset-btn"
+            class="vrc-icon-btn"
+            title="Đặt lại"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+              <path d="M3 3v5h5" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main id="main-content" class="vrc-main-content vrc-scrollbar">
+        <div class="vrc-view-container">
+          <!-- Card 1: THÔNG TIN THUÊ XE -->
+          <section class="vrc-card" data-testid="card-rental-info">
+            <div class="vrc-card-header">
+              <div class="vrc-card-icon">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"
+                  />
+                  <circle cx="7" cy="17" r="2" />
+                  <path d="M9 17h6" />
+                  <circle cx="17" cy="17" r="2" />
+                </svg>
+              </div>
+              <div>
+                <h2 class="vrc-card-title">THÔNG TIN THUÊ XE</h2>
+                <p class="vrc-card-subtitle">Lựa chọn phương tiện & thời gian thuê</p>
+              </div>
+            </div>
+
+            <div class="vrc-form-group">
+              <label for="vehicle-select" class="vrc-form-label">Loại xe</label>
+              <select
+                id="vehicle-select"
+                data-testid="vehicle-select"
+                class="vrc-form-input"
+              >
+                <option value="">-- Chọn loại xe --</option>
+                <option value="manual_bike">Xe số (120.000đ/ngày)</option>
+                <option value="scooter">Xe tay ga (180.000đ/ngày)</option>
+                <option value="car_4">Ô tô 4 chỗ (700.000đ/ngày)</option>
+                <option value="car_7">Ô tô 7 chỗ (1.000.000đ/ngày)</option>
+              </select>
+              <div
+                id="vehicle-error"
+                data-testid="vehicle-error"
+                class="vrc-field-error"
+              ></div>
+            </div>
+
+            <div class="vrc-unit-price-box">
+              <span class="vrc-unit-price-label">Đơn giá thuê:</span>
+              <span
+                id="unit-price-display"
+                data-testid="unit-price-display"
+                class="vrc-unit-price-value"
+                >0đ/ngày</span
+              >
+            </div>
+
+            <div class="vrc-form-group vrc-mb-0">
+              <label for="rental-days" class="vrc-form-label"
+                >Số ngày thuê (1 - 30 ngày)</label
+              >
+              <input
+                type="text"
+                id="rental-days"
+                data-testid="rental-days"
+                class="vrc-form-input"
+                placeholder="Nhập số ngày thuê (VD: 3)"
+                inputmode="numeric"
+                autocomplete="off"
+              />
+              <div
+                id="days-error"
+                data-testid="days-error"
+                class="vrc-field-error"
+              ></div>
+            </div>
+          </section>
+
+          <!-- Card 2: DỊCH VỤ BỔ SUNG -->
+          <section class="vrc-card" data-testid="card-extra-services">
+            <div class="vrc-card-header">
+              <div class="vrc-card-icon">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"
+                  />
+                  <path d="m9 12 2 2 4-4" />
+                </svg>
+              </div>
+              <div>
+                <h2 class="vrc-card-title">DỊCH VỤ BỔ SUNG</h2>
+                <p class="vrc-card-subtitle">Tùy chọn các dịch vụ phụ thu đi kèm</p>
+              </div>
+            </div>
+
+            <div class="vrc-service-list">
+              <!-- Dịch vụ 1: Bảo hiểm xe -->
+              <label
+                for="service-insurance"
+                id="row-insurance"
+                data-testid="row-insurance"
+                class="vrc-toggle-container"
+              >
+                <div class="vrc-toggle-info">
+                  <span class="vrc-toggle-title">Bảo hiểm xe</span>
+                  <span class="vrc-toggle-desc">50.000đ/ngày</span>
+                </div>
+                <div class="vrc-toggle-control">
+                  <input
+                    type="checkbox"
+                    id="service-insurance"
+                    data-testid="service-insurance"
+                    class="vrc-sr-only-checkbox"
+                  />
+                  <div id="switch-insurance" class="vrc-toggle-switch off">
+                    <div class="vrc-toggle-knob off"></div>
+                  </div>
+                </div>
+              </label>
+
+              <!-- Dịch vụ 2: Giao xe tận nơi -->
+              <label
+                for="service-delivery"
+                id="row-delivery"
+                data-testid="row-delivery"
+                class="vrc-toggle-container"
+              >
+                <div class="vrc-toggle-info">
+                  <span class="vrc-toggle-title">Giao xe tận nơi</span>
+                  <span class="vrc-toggle-desc">100.000đ/lần thuê</span>
+                </div>
+                <div class="vrc-toggle-control">
+                  <input
+                    type="checkbox"
+                    id="service-delivery"
+                    data-testid="service-delivery"
+                    class="vrc-sr-only-checkbox"
+                  />
+                  <div id="switch-delivery" class="vrc-toggle-switch off">
+                    <div class="vrc-toggle-knob off"></div>
+                  </div>
+                </div>
+              </label>
+
+              <!-- Dịch vụ 3: Thuê tài xế -->
+              <label
+                for="service-driver"
+                id="row-driver"
+                data-testid="row-driver"
+                class="vrc-toggle-container disabled"
+              >
+                <div class="vrc-toggle-info">
+                  <span class="vrc-toggle-title">Thuê tài xế</span>
+                  <span class="vrc-toggle-desc"
+                    >300.000đ/ngày (Chỉ áp dụng cho ô tô)</span
+                  >
+                </div>
+                <div class="vrc-toggle-control">
+                  <input
+                    type="checkbox"
+                    id="service-driver"
+                    data-testid="service-driver"
+                    class="vrc-sr-only-checkbox"
+                    disabled
+                  />
+                  <div id="switch-driver" class="vrc-toggle-switch off">
+                    <div class="vrc-toggle-knob off"></div>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </section>
+
+          <!-- Card 3: MÃ GIẢM GIÁ -->
+          <section class="vrc-card" data-testid="card-discount">
+            <div class="vrc-card-header">
+              <div class="vrc-card-icon">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"
+                  />
+                  <line x1="7" y1="7" x2="7.01" y2="7" />
+                </svg>
+              </div>
+              <div>
+                <h2 class="vrc-card-title">MÃ GIẢM GIÁ</h2>
+                <p class="vrc-card-subtitle">Hỗ trợ mã SALE10, SALE20, FIXED100</p>
+              </div>
+            </div>
+
+            <div class="vrc-discount-row">
+              <input
+                type="text"
+                id="discount-input"
+                data-testid="discount-input"
+                class="vrc-form-input"
+                placeholder="Nhập mã giảm giá"
+                autocomplete="off"
+              />
+              <button
+                type="button"
+                id="apply-discount-btn"
+                data-testid="apply-discount-btn"
+                class="vrc-btn-primary vrc-btn-apply"
+              >
+                <span>ÁP DỤNG</span>
+              </button>
+            </div>
+
+            <div
+              id="discount-message"
+              data-testid="discount-message"
+              class="vrc-status-banner"
+              style="display: none"
+            ></div>
+          </section>
+
+          <!-- Nút chức năng chính -->
+          <div class="vrc-action-group">
+            <button
+              type="button"
+              id="calculate-btn"
+              data-testid="calculate-btn"
+              class="vrc-btn-primary"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect width="16" height="20" x="4" y="2" rx="2" />
+                <line x1="8" x2="16" y1="6" y2="6" />
+                <line x1="16" x2="16" y1="14" y2="18" />
+                <path d="M16 10h.01" />
+                <path d="M12 10h.01" />
+                <path d="M8 10h.01" />
+                <path d="M12 14h.01" />
+                <path d="M8 14h.01" />
+                <path d="M12 18h.01" />
+                <path d="M8 18h.01" />
+              </svg>
+              <span>TÍNH PHÍ THUÊ XE</span>
+            </button>
+
+            <div class="vrc-btn-gradient-border">
+              <button
+                type="button"
+                id="reset-btn"
+                data-testid="reset-btn"
+                class="vrc-btn-gradient-border-inner"
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"
+                  />
+                  <path d="M3 3v5h5" />
+                </svg>
+                <span class="vrc-btn-gradient-text">ĐẶT LẠI</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 4: CHI TIẾT THANH TOÁN -->
+          <section class="vrc-card" data-testid="card-invoice">
+            <div class="vrc-card-header">
+              <div class="vrc-card-icon">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                  />
+                  <path d="M14 2v6h6" />
+                  <path d="M16 13H8" />
+                  <path d="M16 17H8" />
+                  <path d="M10 9H8" />
+                </svg>
+              </div>
+              <div>
+                <h2 class="vrc-card-title">CHI TIẾT THANH TOÁN</h2>
+                <p class="vrc-card-subtitle">Bảng kê chi tiết chi phí thuê xe</p>
+              </div>
+            </div>
+
+            <!-- Trạng thái trống khi chưa tính toán -->
+            <div
+              id="invoice-empty"
+              data-testid="invoice-empty"
+              class="vrc-invoice-empty"
+            >
+              <div class="vrc-invoice-empty-icon">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect width="16" height="20" x="4" y="2" rx="2" />
+                  <line x1="8" x2="16" y1="6" y2="6" />
+                  <line x1="16" x2="16" y1="14" y2="18" />
+                  <path d="M16 10h.01" />
+                  <path d="M12 10h.01" />
+                  <path d="M8 10h.01" />
+                  <path d="M12 14h.01" />
+                  <path d="M8 14h.01" />
+                  <path d="M12 18h.01" />
+                  <path d="M8 18h.01" />
+                </svg>
+              </div>
+              <p class="vrc-invoice-empty-text">
+                Chọn loại xe, nhập số ngày thuê và nhấn<br />
+                <strong>"TÍNH PHÍ THUÊ XE"</strong> để xem chi tiết hóa đơn.
+              </p>
+            </div>
+
+            <!-- Nội dung hóa đơn sau khi tính -->
+            <div
+              id="invoice-content"
+              data-testid="invoice-content"
+              class="vrc-invoice-content"
+              style="display: none"
+            >
+              <div class="vrc-invoice-heading">CHI TIẾT PHÍ THUÊ XE</div>
+
+              <div class="vrc-invoice-rows">
+                <div class="vrc-invoice-row">
+                  <span class="vrc-invoice-label">Loại xe:</span>
+                  <span
+                    id="inv-vehicle-name"
+                    data-testid="inv-vehicle-name"
+                    class="vrc-invoice-val"
+                  ></span>
+                </div>
+                <div class="vrc-invoice-row">
+                  <span class="vrc-invoice-label">Đơn giá:</span>
+                  <span
+                    id="inv-unit-price"
+                    data-testid="inv-unit-price"
+                    class="vrc-invoice-val"
+                  ></span>
+                </div>
+                <div class="vrc-invoice-row">
+                  <span class="vrc-invoice-label">Số ngày thuê:</span>
+                  <span
+                    id="inv-rental-days"
+                    data-testid="inv-rental-days"
+                    class="vrc-invoice-val"
+                  ></span>
+                </div>
+                <div class="vrc-invoice-row">
+                  <span class="vrc-invoice-label">Tiền thuê xe:</span>
+                  <span
+                    id="inv-rental-fee"
+                    data-testid="inv-rental-fee"
+                    class="vrc-invoice-val vrc-fw-600"
+                  ></span>
+                </div>
+
+                <div class="vrc-invoice-divider"></div>
+
+                <div class="vrc-invoice-row">
+                  <span class="vrc-invoice-label">Phí bảo hiểm:</span>
+                  <span
+                    id="inv-insurance-fee"
+                    data-testid="inv-insurance-fee"
+                    class="vrc-invoice-val"
+                  ></span>
+                </div>
+                <div class="vrc-invoice-row">
+                  <span class="vrc-invoice-label">Phí giao xe:</span>
+                  <span
+                    id="inv-delivery-fee"
+                    data-testid="inv-delivery-fee"
+                    class="vrc-invoice-val"
+                  ></span>
+                </div>
+                <div class="vrc-invoice-row">
+                  <span class="vrc-invoice-label">Phí tài xế:</span>
+                  <span
+                    id="inv-driver-fee"
+                    data-testid="inv-driver-fee"
+                    class="vrc-invoice-val"
+                  ></span>
+                </div>
+                <div class="vrc-invoice-row">
+                  <span class="vrc-invoice-label">Tổng phụ phí:</span>
+                  <span
+                    id="inv-total-extra-fee"
+                    data-testid="inv-total-extra-fee"
+                    class="vrc-invoice-val vrc-fw-600"
+                  ></span>
+                </div>
+
+                <div class="vrc-invoice-divider"></div>
+
+                <div class="vrc-invoice-row">
+                  <span class="vrc-invoice-label">Mã giảm giá:</span>
+                  <span
+                    id="inv-discount-code"
+                    data-testid="inv-discount-code"
+                    class="vrc-invoice-val"
+                  ></span>
+                </div>
+                <div class="vrc-invoice-row">
+                  <span class="vrc-invoice-label">Số tiền giảm:</span>
+                  <span
+                    id="inv-discount-amount"
+                    data-testid="inv-discount-amount"
+                    class="vrc-invoice-val vrc-discount-val"
+                  ></span>
+                </div>
+              </div>
+
+              <div class="vrc-invoice-total-box">
+                <span class="vrc-invoice-total-label">TỔNG THANH TOÁN:</span>
+                <span
+                  id="inv-total-payment"
+                  data-testid="inv-total-payment"
+                  class="vrc-invoice-total-value"
+                ></span>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <script src="../js/constants.js"></script>
+    <script src="../js/validation.js"></script>
+    <script src="../js/discount.js"></script>
+    <script src="../js/calculator.js"></script>
+    <script src="sidepanel.js"></script>
+  </body>
+</html>

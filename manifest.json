@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Vehicle Rental Calculator – Hệ thống tính phí thuê xe",
+  "version": "1.0.0",
+  "description": "Hệ thống tính toán chi phí thuê xe dựa trên loại xe, số ngày thuê, dịch vụ phụ thu và mã giảm giá.",
+  "permissions": ["sidePanel"],
+  "action": {
+    "default_title": "Vehicle Rental Calculator"
+  },
+  "side_panel": {
+    "default_path": "sidepanel/sidepanel.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
